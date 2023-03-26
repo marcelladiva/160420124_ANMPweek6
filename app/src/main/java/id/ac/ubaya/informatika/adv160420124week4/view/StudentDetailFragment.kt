@@ -24,18 +24,5 @@ class StudentDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        detailViewModel.fetch()
-        val txtStudentID = view.findViewById<TextInputEditText>(R.id.txtID)
-        val txtStudentName = view.findViewById<TextInputEditText>(R.id.txtName)
-        val txtBod = view.findViewById<TextInputEditText>(R.id.txtBod)
-        val txtPhone = view.findViewById<TextInputEditText>(R.id.txtPhone)
-
-        detailViewModel.studentLD.observe(viewLifecycleOwner) { studentDetail ->
-            txtStudentID.setText(studentDetail.id.toString())
-            txtStudentName.setText(studentDetail.name.toString())
-            txtBod.setText(studentDetail.dob.toString())
-            txtPhone.setText(studentDetail.phone.toString())
-        }
     }
 }
