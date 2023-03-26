@@ -26,7 +26,6 @@ class StudentDetailFragment : Fragment() {
 
         detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         detailViewModel.fetch()
-
         val txtStudentID = view.findViewById<TextInputEditText>(R.id.txtID)
         val txtStudentName = view.findViewById<TextInputEditText>(R.id.txtName)
         val txtBod = view.findViewById<TextInputEditText>(R.id.txtBod)
