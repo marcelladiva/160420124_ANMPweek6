@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import id.ac.ubaya.informatika.adv160420124week4.R
+import id.ac.ubaya.informatika.adv160420124week4.util.loadImage
 import id.ac.ubaya.informatika.adv160420124week4.viewmodel.DetailViewModel
 
 class StudentDetailFragment : Fragment() {
@@ -24,15 +27,21 @@ class StudentDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        detailViewModel.fetch()
+        if(arguments != null) {
+            val idStudent = StudentDetailFragmentArgs.fromBundle(requireArguments()).idStudent
+            detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+            detailViewModel.fetch(idStudent)
+        }
 
+        val imgStudent = view.findViewById<ImageView>(R.id.imageView2)
+        val progBar = view.findViewById<ProgressBar>(R.id.progressBar2)
         val txtID = view.findViewById<TextInputEditText>(R.id.txtID)
         val txtName = view.findViewById<TextInputEditText>(R.id.txtName)
         val txtBod = view.findViewById<TextInputEditText>(R.id.txtBod)
         val txtPhone = view.findViewById<TextInputEditText>(R.id.txtPhone)
 
         detailViewModel.studentLD.observe(viewLifecycleOwner){studentDetail ->
+            imgStudent.loadImage(studentDetail.photoUrl,progBar)
             txtID.setText(studentDetail.id.toString())
             txtName.setText(studentDetail.name.toString())
             txtBod.setText(studentDetail.bod.toString())
